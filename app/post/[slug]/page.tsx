@@ -18,7 +18,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 	return (
 		<main className="container mx-auto grid max-w-[800px] grid-cols-1 place-items-start gap-6 px-4 py-8">
 			<h1 className="text-3xl font-bold">{post.title}</h1>
-			<div className="max-h-[300px] w-full overflow-hidden rounded-lg">
+			<div className="h-[300px] w-full">
 				<Image
 					src={
 						post.featuredImage?.node.mediaItemUrl ||
@@ -29,7 +29,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 					}
 					width={300}
 					height={300}
-					className="h-full w-full object-cover"
+					className="h-full w-full rounded-lg object-cover"
 				/>
 			</div>
 			<div className="mt-auto text-gray-500">
