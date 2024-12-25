@@ -24,6 +24,12 @@ export const GET_ALL_POSTS = gql`
 					date
 				}
 			}
+			pageInfo {
+				endCursor
+				hasNextPage
+				hasPreviousPage
+				startCursor
+			}
 		}
 	}
 `;
