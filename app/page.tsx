@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import handlePaginationParams from '@/lib/handlePaginationParams';
 import { Button } from '@/components/ui/button';
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
+import { ArrowLeftIcon, ArrowRightIcon, CalendarDays } from 'lucide-react';
 
 type Post = NonNullable<GetAllPostsQuery['posts']>['edges'][0]['node'];
 type PageInfo = NonNullable<GetAllPostsQuery['posts']>['pageInfo'];
@@ -23,7 +23,11 @@ export default async function Home({
 	const posts = response.data;
 	return (
 		<main className="container mx-auto px-4 py-8">
-			<h1 className="mb-8 text-3xl font-bold">Latest Posts</h1>
+			<h1 className="mb-8 text-3xl font-bold">
+				<Link href="/">
+					Latest Posts <CalendarDays className="inline-block h-5 w-5" />
+				</Link>
+			</h1>
 			<div className="grid grid-cols-1 place-items-center gap-6">
 				{posts.posts?.edges?.map(({ node }) => (
 					<PostCard key={node.id} post={node} />
