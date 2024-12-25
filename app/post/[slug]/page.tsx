@@ -1,5 +1,10 @@
+import { GetPostQuery } from '@/gql/graphql';
 import getPost from '@/lib/wordpress/getPost';
 import Image from 'next/image';
+
+type CommentsType = NonNullable<
+	NonNullable<GetPostQuery['post']>['comments']
+>['nodes'];
 
 export default async function Post({ params }: { params: { slug: string } }) {
 	const response = await getPost({ params: { id: params.slug } });
@@ -32,12 +37,43 @@ export default async function Post({ params }: { params: { slug: string } }) {
 				{new Date(post.date || '').toLocaleDateString()}
 			</div>
 			<article
-				className="prose lg:prose-lg max-w-full"
+				className="prose lg:prose-lg min-h-[300px] max-w-full"
 				// TODO: Figure out if this is safe or not
 				dangerouslySetInnerHTML={{
 					__html: post.content || ''
 				}}
 			></article>
+			<div className="flex w-full flex-col gap-5 border-t border-gray-200 pt-4">
+				<h2 className="text-xl font-bold">
+					Comments ({post.commentCount || 0})
+				</h2>
+				<Comments comments={post.comments?.nodes || []} />
+			</div>
 		</main>
+	);
+}
+
+function Comments({ comments }: { comments: CommentsType }) {
+	return (
+		<div className="mt-auto text-sm text-gray-500">
+			{comments.map((comment) => (
+				<div
+					key={comment.date}
+					className="rounded border border-gray-200 p-5 pb-4"
+				>
+					<div className="mb-2 text-gray-600">
+						By {comment.author?.name} on{' '}
+						{new Date(comment.date || '').toLocaleDateString()}
+					</div>
+					<div
+						className="prose lg:prose-lg max-w-full"
+						// TODO: Figure out if this is safe or not
+						dangerouslySetInnerHTML={{
+							__html: comment.content || ''
+						}}
+					></div>
+				</div>
+			))}
+		</div>
 	);
 }

@@ -9564,7 +9564,7 @@ export type GetPostQueryVariables = Exact<{
 }>;
 
 
-export type GetPostQuery = { __typename?: 'RootQuery', post?: { __typename?: 'Post', title?: string | null, content?: string | null, date?: string | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null } } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, caption?: string | null, mediaItemUrl?: string | null } } | null } | null };
+export type GetPostQuery = { __typename?: 'RootQuery', post?: { __typename?: 'Post', title?: string | null, content?: string | null, date?: string | null, commentCount?: number | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null } } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, caption?: string | null, mediaItemUrl?: string | null } } | null, comments?: { __typename?: 'PostToCommentConnection', nodes: Array<{ __typename?: 'Comment', content?: string | null, date?: string | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', name?: string | null } | null }> } | null } | null };
 
 
 export const GetAllPostsDocument = `
@@ -9616,6 +9616,16 @@ export const GetPostDocument = `
         altText
         caption
         mediaItemUrl
+      }
+    }
+    commentCount
+    comments {
+      nodes {
+        content
+        date
+        author {
+          name
+        }
       }
     }
   }

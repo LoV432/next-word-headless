@@ -52,6 +52,16 @@ export const GET_POST = gql`
 					mediaItemUrl
 				}
 			}
+			commentCount
+			comments {
+				nodes {
+					content
+					date
+					author {
+						name
+					}
+				}
+			}
 		}
 	}
 `;
