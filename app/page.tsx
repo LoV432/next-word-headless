@@ -22,10 +22,10 @@ export default async function Home({
 	}
 	const posts = response.data;
 	return (
-		<main className="container mx-auto px-4 py-8">
-			<h1 className="mb-8 text-3xl font-bold">
+		<main className="container mx-auto max-w-[300] px-4 py-8 sm:max-w-[800px]">
+			<h1 className="mb-8 text-4xl">
 				<Link href="/">
-					Latest Posts <CalendarDays className="inline-block h-5 w-5" />
+					All Posts <CalendarDays className="inline-block h-5 w-5" />
 				</Link>
 			</h1>
 			<div className="grid grid-cols-1 place-items-center gap-6">
@@ -40,7 +40,7 @@ export default async function Home({
 
 function PostCard({ post }: { post: Post }) {
 	return (
-		<div className="relative flex w-full max-w-[300px] flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:max-w-[800px] sm:grid-cols-[245px_1fr] sm:gap-2">
+		<div className="relative flex w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:gap-2">
 			<div className="h-[205px]">
 				<Image
 					src={
