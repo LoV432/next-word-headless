@@ -72,7 +72,7 @@ function PostCard({ post }: { post: Post }) {
 							__html:
 								post.excerpt.length < 250
 									? post.excerpt
-									: post.excerpt?.slice(0, 250) + ' [...]' || ''
+									: post.excerpt?.slice(0, 200) + ' [...]' || ''
 						}}
 					></div>
 				)}
