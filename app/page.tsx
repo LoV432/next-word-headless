@@ -88,22 +88,26 @@ function PostCard({ post }: { post: Post }) {
 function Pagination({ pageInfo }: { pageInfo: PageInfo }) {
 	return (
 		<div className="flex justify-center gap-5 pt-5">
-			{pageInfo.hasPreviousPage && (
-				<Button asChild>
-					<Link href={`/?before=${pageInfo.startCursor}`}>
-						<ArrowLeftIcon className="h-5 w-5" />
-						Previous
-					</Link>
-				</Button>
-			)}
-			{pageInfo.hasNextPage && (
-				<Button asChild>
-					<Link href={`/?after=${pageInfo.endCursor}`}>
-						Next
-						<ArrowRightIcon className="h-5 w-5" />
-					</Link>
-				</Button>
-			)}
+			<Button
+				asChild
+				className={
+					pageInfo.hasPreviousPage ? '' : 'pointer-events-none opacity-0'
+				}
+			>
+				<Link href={`/?before=${pageInfo.startCursor}`}>
+					<ArrowLeftIcon className="h-5 w-5" />
+					Previous
+				</Link>
+			</Button>
+			<Button
+				asChild
+				className={pageInfo.hasNextPage ? '' : 'pointer-events-none opacity-0'}
+			>
+				<Link href={`/?after=${pageInfo.endCursor}`}>
+					Next
+					<ArrowRightIcon className="h-5 w-5" />
+				</Link>
+			</Button>
 		</div>
 	);
 }
