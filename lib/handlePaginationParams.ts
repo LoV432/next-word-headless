@@ -1,19 +1,22 @@
-export default function handlePaginationParams(params: {
-	[key: string]: string | undefined;
-}) {
+export default function handlePaginationParams(
+	params: {
+		[key: string]: string | undefined;
+	},
+	limit = 10
+) {
 	const after = params.after;
 	const before = params.before;
 	if (after) {
 		return {
 			after: after,
-			first: 1
+			first: limit
 		};
 	}
 	if (before) {
 		return {
 			before: before,
-			last: 1
+			last: limit
 		};
 	}
-	return { first: 1 };
+	return { first: limit };
 }
