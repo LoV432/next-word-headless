@@ -40,8 +40,8 @@ export default async function Home({
 
 function PostCard({ post }: { post: Post }) {
 	return (
-		<div className="relative flex w-full max-w-[300px] flex-col overflow-hidden rounded-lg bg-white shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:h-[205px] sm:max-w-[800px] sm:grid-cols-[245px_1fr] sm:gap-2">
-			<div className="h-[192px] sm:h-full">
+		<div className="relative flex w-full max-w-[300px] flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:max-w-[800px] sm:grid-cols-[245px_1fr] sm:gap-2">
+			<div className="h-[205px]">
 				<Image
 					src={
 						post.featuredImage?.node.mediaItemUrl ||
@@ -64,13 +64,18 @@ function PostCard({ post }: { post: Post }) {
 						{post.title}
 					</Link>
 				</h2>
-				<div
-					className="mb-4 text-gray-600"
-					// TODO: Figure out if this is safe or not
-					dangerouslySetInnerHTML={{
-						__html: post.excerpt || ''
-					}}
-				></div>
+				{post.excerpt && (
+					<div
+						className="mb-4 text-gray-600"
+						// TODO: Figure out if this is safe or not
+						dangerouslySetInnerHTML={{
+							__html:
+								post.excerpt.length < 250
+									? post.excerpt
+									: post.excerpt?.slice(0, 250) + ' [...]' || ''
+						}}
+					></div>
+				)}
 				<div className="mt-auto text-sm text-gray-500">
 					By {post.author?.node.name} on{' '}
 					{new Date(post.date || '').toLocaleDateString()}
