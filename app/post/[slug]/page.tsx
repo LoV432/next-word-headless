@@ -7,8 +7,13 @@ type CommentsType = NonNullable<
 	NonNullable<GetPostQuery['post']>['comments']
 >['nodes'];
 
-export default async function Post({ params }: { params: { slug: string } }) {
-	const response = await getPost({ params: { id: params.slug } });
+export default async function Post({
+	params
+}: {
+	params: Promise<{ slug: string }>;
+}) {
+	const { slug } = await params;
+	const response = await getPost({ params: { id: slug } });
 	if (!response.success) {
 		return <div>Error while fetching post</div>;
 	}
@@ -38,7 +43,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 				{new Date(post.date || '').toLocaleDateString()}
 			</div>
 			<article
-				className="prose lg:prose-lg prose-img:border-2 prose-img:rounded prose-img:border-black min-h-[300px] max-w-full pb-32"
+				className="prose min-h-[300px] max-w-full pb-32 lg:prose-lg prose-img:rounded prose-img:border-2 prose-img:border-black"
 				// TODO: Figure out if this is safe or not
 				dangerouslySetInnerHTML={{
 					__html: post.content || ''
@@ -58,7 +63,10 @@ function Comments({ comments }: { comments: CommentsType }) {
 	return (
 		<div className="mt-auto flex flex-col gap-5 text-gray-500">
 			{comments.map((comment) => (
-				<div className="flex flex-col gap-2 rounded border border-gray-200 p-5">
+				<div
+					key={comment.date}
+					className="flex flex-col gap-2 rounded border border-gray-200 p-5"
+				>
 					<div className="flex items-center gap-2">
 						<Avatar>
 							<AvatarImage
