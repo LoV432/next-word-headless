@@ -3,6 +3,8 @@ import { GetAllPostsQuery } from '@/gql/graphql';
 import Image from 'next/image';
 import Link from 'next/link';
 import handlePaginationParams from '@/lib/handlePaginationParams';
+import { Button } from '@/components/ui/button';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 
 type Post = NonNullable<GetAllPostsQuery['posts']>['edges'][0]['node'];
 type PageInfo = NonNullable<GetAllPostsQuery['posts']>['pageInfo'];
@@ -72,22 +74,22 @@ function PostCard({ post }: { post: Post }) {
 
 function Pagination({ pageInfo }: { pageInfo: PageInfo }) {
 	return (
-		<div className="flex justify-center">
+		<div className="flex justify-center gap-5 pt-5">
 			{pageInfo.hasPreviousPage && (
-				<Link
-					href={`/?before=${pageInfo.startCursor}`}
-					className="text-blue-600 hover:text-blue-800"
-				>
-					Previous
-				</Link>
+				<Button asChild>
+					<Link href={`/?before=${pageInfo.startCursor}`}>
+						<ArrowLeftIcon className="h-5 w-5" />
+						Previous
+					</Link>
+				</Button>
 			)}
 			{pageInfo.hasNextPage && (
-				<Link
-					href={`/?after=${pageInfo.endCursor}`}
-					className="text-blue-600 hover:text-blue-800"
-				>
-					Next
-				</Link>
+				<Button asChild>
+					<Link href={`/?after=${pageInfo.endCursor}`}>
+						Next
+						<ArrowRightIcon className="h-5 w-5" />
+					</Link>
+				</Button>
 			)}
 		</div>
 	);
