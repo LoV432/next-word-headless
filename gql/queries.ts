@@ -21,6 +21,7 @@ export const GET_ALL_POSTS = gql`
 							userId
 						}
 					}
+					date
 				}
 			}
 		}
