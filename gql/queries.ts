@@ -33,3 +33,25 @@ export const GET_ALL_POSTS = gql`
 		}
 	}
 `;
+
+export const GET_POST = gql`
+	query GetPost($id: ID = "$slug") {
+		post(id: $id, idType: SLUG) {
+			author {
+				node {
+					name
+				}
+			}
+			title
+			content
+			date
+			featuredImage {
+				node {
+					altText
+					caption
+					mediaItemUrl
+				}
+			}
+		}
+	}
+`;

@@ -1,12 +1,9 @@
-import { getSdk, GetAllPostsQueryVariables } from '@/gql/graphql';
-import { GraphQLClient } from 'graphql-request';
-
-const client = new GraphQLClient(`${process.env.WORDS_API_URL}`);
-const query = getSdk(client).GetAllPosts;
+import { GetAllPostsQueryVariables } from '@/gql/graphql';
+import { gqlClient } from '@/lib/GraphQLClient';
 
 export async function getAllPosts(params: GetAllPostsQueryVariables) {
 	try {
-		const response = await query(params);
+		const response = await gqlClient.GetAllPosts(params);
 		return {
 			success: true as const,
 			data: response
