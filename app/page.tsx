@@ -36,18 +36,22 @@ export default async function Home({
 
 function PostCard({ post }: { post: Post }) {
 	return (
-		<div className="relative flex w-full max-w-[300px] flex-col rounded-lg bg-white shadow-md duration-200 hover:translate-y-[-4px] sm:max-w-[800px] sm:flex-row">
-			<Image
-				src={
-					post.featuredImage?.node.mediaItemUrl ||
-					'https://via.placeholder.com/300x200'
-				}
-				alt={post.featuredImage?.node.caption || post.title || 'Featured Image'}
-				width={300}
-				height={200}
-				className="h-full w-full object-cover sm:h-48 sm:w-48"
-			/>
-			<div className="flex flex-col p-4">
+		<div className="relative flex w-full max-w-[300px] flex-col overflow-hidden rounded-lg bg-white shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:h-[205px] sm:max-w-[800px] sm:grid-cols-[245px_1fr] sm:gap-2">
+			<div className="h-[192px] sm:h-full">
+				<Image
+					src={
+						post.featuredImage?.node.mediaItemUrl ||
+						'https://via.placeholder.com/300x200'
+					}
+					alt={
+						post.featuredImage?.node.caption || post.title || 'Featured Image'
+					}
+					width={300}
+					height={300}
+					className="h-full w-full object-cover"
+				/>
+			</div>
+			<div className="flex w-fit flex-col p-4">
 				<h2 className="mb-2 text-xl font-semibold">
 					<Link
 						href={`/post/${post.slug}`}
