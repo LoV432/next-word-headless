@@ -1,46 +1,21 @@
-import safeqlRequest from '../safeqlRequest';
+import { getSdk, GetAllPostsQueryVariables } from '@/gql/graphql';
+import { GraphQLClient } from 'graphql-request';
 
-export default async function getAllPosts({
-	first,
-	after,
-	before,
-	last
-}: {
-	first?: number;
-	after?: string;
-	before?: string;
-	last?: number;
-}) {
-	const response = await safeqlRequest(`
-		query getAllPosts {
-			posts (${first ? `first: ${first}` : ''}, after: "${after}", before: "${before}", ${last ? `last: ${last}` : ''}) {
-				edges {
-					node {
-						id
-						content
-						slug
-						title
-						featuredImage {
-							node {
-								caption
-								mediaItemUrl
-							}
-						}
-						author {
-							node {
-								name
-								userId
-							}
-						}
-					}
-				}
-			}
-		}
-	`);
+const client = new GraphQLClient(`${process.env.WORDS_API_URL}`);
+const query = getSdk(client).GetAllPosts;
 
-	if (!response.success) {
-		throw new Error(response.error);
+export async function getAllPosts(params: GetAllPostsQueryVariables) {
+	try {
+		const response = await query(params);
+		return {
+			success: true as const,
+			data: response
+		};
+	} catch (error) {
+		console.error(error);
+		return {
+			success: false as const,
+			error: error instanceof Error ? error : new Error('Unknown error')
+		};
 	}
-
-	return response.data;
 }
