@@ -26,7 +26,7 @@ export default async function Home({
 	return (
 		<main className="container mx-auto max-w-[300] px-4 py-8 sm:max-w-[800px]">
 			<h1 className="mb-8 text-4xl">
-				<Link href="/">
+				<Link href={`/category/${queryParams.slug}`}>
 					All Posts in {queryParams.slug}{' '}
 					<CalendarDays className="inline-block h-5 w-5" />
 				</Link>
