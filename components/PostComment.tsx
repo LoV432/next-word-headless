@@ -23,6 +23,9 @@ export function PostComment({ id }: { id: number }) {
 
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+		if (!name || !email || !comment) {
+			return;
+		}
 		setIsLoading(true);
 		try {
 			const response = await postComment({
@@ -57,6 +60,8 @@ export function PostComment({ id }: { id: number }) {
 							Name
 						</label>
 						<Input
+							minLength={2}
+							required
 							id="name"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
@@ -71,6 +76,8 @@ export function PostComment({ id }: { id: number }) {
 							Email
 						</label>
 						<Input
+							minLength={3}
+							required
 							id="email"
 							type="email"
 							value={email}
@@ -86,6 +93,8 @@ export function PostComment({ id }: { id: number }) {
 							Comment
 						</label>
 						<Textarea
+							minLength={3}
+							required
 							id="comment"
 							rows={5}
 							value={comment}
