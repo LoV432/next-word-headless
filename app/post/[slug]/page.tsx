@@ -23,7 +23,7 @@ export default async function Post({
 	}
 	return (
 		<main className="container mx-auto grid max-w-[800px] grid-cols-1 place-items-start gap-6 px-4 py-8">
-			<h1 className="text-5xl font-bold">{post.title}</h1>
+			<h1 className="text-4xl font-bold">{post.title}</h1>
 			<div className="h-[300px] w-full">
 				<Image
 					src={
