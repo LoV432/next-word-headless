@@ -9575,7 +9575,17 @@ export type GetPostQueryVariables = Exact<{
 }>;
 
 
-export type GetPostQuery = { __typename?: 'RootQuery', post?: { __typename?: 'Post', title?: string | null, content?: string | null, date?: string | null, commentCount?: number | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null } } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, caption?: string | null, mediaItemUrl?: string | null } } | null, comments?: { __typename?: 'PostToCommentConnection', nodes: Array<{ __typename?: 'Comment', content?: string | null, date?: string | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', name?: string | null } | null }> } | null } | null };
+export type GetPostQuery = { __typename?: 'RootQuery', post?: { __typename?: 'Post', title?: string | null, content?: string | null, date?: string | null, commentCount?: number | null, databaseId: number, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null } } | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, caption?: string | null, mediaItemUrl?: string | null } } | null, comments?: { __typename?: 'PostToCommentConnection', nodes: Array<{ __typename?: 'Comment', content?: string | null, date?: string | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', name?: string | null } | null }> } | null } | null };
+
+export type PostCommentMutationVariables = Exact<{
+  author?: InputMaybe<Scalars['String']['input']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
+  commentOn?: InputMaybe<Scalars['Int']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type PostCommentMutation = { __typename?: 'RootMutation', createComment?: { __typename?: 'CreateCommentPayload', success?: boolean | null } | null };
 
 
 export const GetAllPostsDocument = `
@@ -9690,6 +9700,16 @@ export const GetPostDocument = `
         }
       }
     }
+    databaseId
+  }
+}
+    `;
+export const PostCommentDocument = `
+    mutation PostComment($author: String, $authorEmail: String, $commentOn: Int, $content: String) {
+  createComment(
+    input: {author: $author, authorEmail: $authorEmail, commentOn: $commentOn, content: $content, status: HOLD}
+  ) {
+    success
   }
 }
     `;
@@ -9709,6 +9729,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetPost(variables?: GetPostQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPostQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPostQuery>(GetPostDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPost', 'query', variables);
+    },
+    PostComment(variables?: PostCommentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PostCommentMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<PostCommentMutation>(PostCommentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PostComment', 'mutation', variables);
     }
   };
 }

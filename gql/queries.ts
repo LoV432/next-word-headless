@@ -120,6 +120,28 @@ export const GET_POST = gql`
 					}
 				}
 			}
+			databaseId
+		}
+	}
+`;
+
+export const POST_COMMENT = gql`
+	mutation PostComment(
+		$author: String
+		$authorEmail: String
+		$commentOn: Int
+		$content: String
+	) {
+		createComment(
+			input: {
+				author: $author
+				authorEmail: $authorEmail
+				commentOn: $commentOn
+				content: $content
+				status: HOLD
+			}
+		) {
+			success
 		}
 	}
 `;

@@ -2,6 +2,7 @@ import { GetPostQuery } from '@/gql/graphql';
 import getPost from '@/lib/wordpress/getPost';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { PostComment } from '@/components/PostComment';
 
 type CommentsType = NonNullable<
 	NonNullable<GetPostQuery['post']>['comments']
@@ -53,6 +54,7 @@ export default async function Post({
 				<h2 className="text-xl font-bold text-gray-600">
 					Comments ({post.commentCount || 0})
 				</h2>
+				<PostComment id={Number(post.databaseId)} />
 				<Comments comments={post.comments?.nodes || []} />
 			</div>
 		</main>

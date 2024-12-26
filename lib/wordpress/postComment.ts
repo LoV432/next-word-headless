@@ -1,13 +1,14 @@
-import { GetPostQueryVariables } from '@/gql/graphql';
+'use server';
+import { PostCommentMutationVariables } from '@/gql/graphql';
 import { gqlClient } from '@/lib/GraphQLClient';
 
-export default async function getPost({
+export default async function postComment({
 	params
 }: {
-	params: GetPostQueryVariables;
+	params: PostCommentMutationVariables;
 }) {
 	try {
-		const response = await gqlClient.GetPost(params);
+		const response = await gqlClient.PostComment(params);
 		return { success: true as const, data: response };
 	} catch (error) {
 		console.error(error);
