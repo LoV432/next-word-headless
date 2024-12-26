@@ -31,7 +31,7 @@ export default async function Home({
 					<CalendarDays className="inline-block h-5 w-5" />
 				</Link>
 			</h1>
-			<div className="grid grid-cols-1 place-items-center gap-6">
+			<div className="grid grid-cols-1 place-items-center gap-6 sm:auto-rows-[230px]">
 				{posts.posts?.edges?.map(({ node }) => (
 					<PostCard key={node.id} post={node} />
 				))}

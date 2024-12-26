@@ -6,7 +6,7 @@ type Post = NonNullable<GetAllPostsQuery['posts']>['edges'][0]['node'];
 
 export function PostCard({ post }: { post: Post }) {
 	return (
-		<div className="relative flex w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:grid-rows-[230px] sm:gap-2">
+		<div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:gap-2">
 			<div className="h-[230px]">
 				<Image
 					src={
