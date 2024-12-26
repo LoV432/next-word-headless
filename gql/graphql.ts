@@ -9559,6 +9559,17 @@ export type GetAllPostsQueryVariables = Exact<{
 
 export type GetAllPostsQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', node: { __typename?: 'Post', id: string, excerpt?: string | null, slug?: string | null, title?: string | null, date?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', caption?: string | null, mediaItemUrl?: string | null } } | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null, userId?: number | null } } | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', slug?: string | null, name?: string | null }> } | null } }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } | null };
 
+export type GetAllPostsFromCategoryQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetAllPostsFromCategoryQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', edges: Array<{ __typename?: 'RootQueryToPostConnectionEdge', node: { __typename?: 'Post', id: string, excerpt?: string | null, slug?: string | null, title?: string | null, date?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', caption?: string | null, mediaItemUrl?: string | null } } | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null, userId?: number | null } } | null, categories?: { __typename?: 'PostToCategoryConnection', nodes: Array<{ __typename?: 'Category', slug?: string | null, name?: string | null }> } | null } }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null } } | null };
+
 export type GetPostQueryVariables = Exact<{
   id?: InputMaybe<Scalars['ID']['input']>;
 }>;
@@ -9570,6 +9581,51 @@ export type GetPostQuery = { __typename?: 'RootQuery', post?: { __typename?: 'Po
 export const GetAllPostsDocument = `
     query GetAllPosts($first: Int, $after: String, $before: String, $last: Int) {
   posts(first: $first, after: $after, before: $before, last: $last) {
+    edges {
+      node {
+        id
+        excerpt
+        slug
+        title
+        featuredImage {
+          node {
+            caption
+            mediaItemUrl
+          }
+        }
+        author {
+          node {
+            name
+            userId
+          }
+        }
+        date
+        categories {
+          nodes {
+            slug
+            name
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+    `;
+export const GetAllPostsFromCategoryDocument = `
+    query GetAllPostsFromCategory($first: Int, $after: String, $before: String, $last: Int, $categoryName: String) {
+  posts(
+    first: $first
+    after: $after
+    before: $before
+    last: $last
+    where: {categoryName: $categoryName}
+  ) {
     edges {
       node {
         id
@@ -9647,6 +9703,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     GetAllPosts(variables?: GetAllPostsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllPostsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllPostsQuery>(GetAllPostsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllPosts', 'query', variables);
+    },
+    GetAllPostsFromCategory(variables?: GetAllPostsFromCategoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllPostsFromCategoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllPostsFromCategoryQuery>(GetAllPostsFromCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllPostsFromCategory', 'query', variables);
     },
     GetPost(variables?: GetPostQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPostQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPostQuery>(GetPostDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPost', 'query', variables);

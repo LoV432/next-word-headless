@@ -40,6 +40,58 @@ export const GET_ALL_POSTS = gql`
 	}
 `;
 
+export const GET_ALL_POSTS_BY_CATEGORY = gql`
+	query GetAllPostsFromCategory(
+		$first: Int
+		$after: String
+		$before: String
+		$last: Int
+		$categoryName: String
+	) {
+		posts(
+			first: $first
+			after: $after
+			before: $before
+			last: $last
+			where: { categoryName: $categoryName }
+		) {
+			edges {
+				node {
+					id
+					excerpt
+					slug
+					title
+					featuredImage {
+						node {
+							caption
+							mediaItemUrl
+						}
+					}
+					author {
+						node {
+							name
+							userId
+						}
+					}
+					date
+					categories {
+						nodes {
+							slug
+							name
+						}
+					}
+				}
+			}
+			pageInfo {
+				endCursor
+				hasNextPage
+				hasPreviousPage
+				startCursor
+			}
+		}
+	}
+`;
+
 export const GET_POST = gql`
 	query GetPost($id: ID = "$slug") {
 		post(id: $id, idType: SLUG) {
