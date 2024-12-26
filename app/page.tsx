@@ -1,13 +1,9 @@
 import { getAllPosts } from '@/lib/wordpress/getAllPosts';
-import { GetAllPostsQuery } from '@/gql/graphql';
-import Image from 'next/image';
+import { PostCard } from '@/components/PostCard';
 import Link from 'next/link';
 import handlePaginationParams from '@/lib/handlePaginationParams';
-import { Button } from '@/components/ui/button';
-import { ArrowLeftIcon, ArrowRightIcon, CalendarDays } from 'lucide-react';
-
-type Post = NonNullable<GetAllPostsQuery['posts']>['edges'][0]['node'];
-type PageInfo = NonNullable<GetAllPostsQuery['posts']>['pageInfo'];
+import { CalendarDays } from 'lucide-react';
+import { Pagination } from '@/components/Pagination';
 
 export default async function Home({
 	searchParams
@@ -35,90 +31,5 @@ export default async function Home({
 			</div>
 			{posts.posts?.pageInfo && <Pagination pageInfo={posts.posts.pageInfo} />}
 		</main>
-	);
-}
-
-function PostCard({ post }: { post: Post }) {
-	return (
-		<div className="relative flex w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:grid-rows-[230px] sm:gap-2">
-			<div className="h-[230px]">
-				<Image
-					src={
-						post.featuredImage?.node.mediaItemUrl ||
-						'https://via.placeholder.com/300x200'
-					}
-					alt={
-						post.featuredImage?.node.caption || post.title || 'Featured Image'
-					}
-					width={300}
-					height={300}
-					className="h-full w-full object-cover"
-				/>
-			</div>
-			<div className="flex w-fit flex-col p-4">
-				<h2 className="mb-2 text-xl font-semibold">
-					<Link
-						href={`/post/${post.slug}`}
-						className="text-blue-600 before:absolute before:left-0 before:top-0 before:h-full before:w-full hover:text-blue-800"
-					>
-						{post.title}
-					</Link>
-				</h2>
-				<div className="flex gap-2">
-					{post.categories?.nodes?.map((category) => (
-						<Link
-							href="#"
-							key={category.slug}
-							className="z-10 mb-2 text-sm text-gray-500 hover:text-gray-600 hover:underline"
-						>
-							{category.name}
-						</Link>
-					))}
-				</div>
-				{post.excerpt && (
-					<div
-						className="mb-4 text-gray-600"
-						// TODO: Figure out if this is safe or not
-						dangerouslySetInnerHTML={{
-							__html:
-								post.excerpt.length < 250
-									? post.excerpt
-									: post.excerpt?.slice(0, 200) + ' [...]' || ''
-						}}
-					></div>
-				)}
-				<div className="mt-auto text-sm text-gray-500">
-					By {post.author?.node.name} on{' '}
-					{new Date(post.date || '').toLocaleDateString()}
-				</div>
-			</div>
-		</div>
-	);
-}
-
-function Pagination({ pageInfo }: { pageInfo: PageInfo }) {
-	return (
-		<div className="flex justify-center gap-5 pt-5">
-			<Button
-				asChild
-				className={
-					pageInfo.hasPreviousPage ? '' : 'pointer-events-none opacity-0'
-				}
-			>
-				<Link href={`/?before=${pageInfo.startCursor}`}>
-					<ArrowLeftIcon className="h-5 w-5" />
-					Previous
-				</Link>
-			</Button>
-			<Button
-				asChild
-				className={pageInfo.hasNextPage ? '' : 'pointer-events-none opacity-0'}
-			>
-				<Link href={`/?after=${pageInfo.endCursor}`}>
-					Next
-					<ArrowRightIcon className="h-5 w-5" />
-				</Link>
-			</Button>
-		</div>
 	);
 }
