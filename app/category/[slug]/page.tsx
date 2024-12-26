@@ -27,7 +27,8 @@ export default async function Home({
 		<main className="container mx-auto max-w-[300] px-4 py-8 sm:max-w-[800px]">
 			<h1 className="mb-8 text-4xl">
 				<Link href="/">
-					All Posts <CalendarDays className="inline-block h-5 w-5" />
+					All Posts in {queryParams.slug}{' '}
+					<CalendarDays className="inline-block h-5 w-5" />
 				</Link>
 			</h1>
 			<div className="grid grid-cols-1 place-items-center gap-6">
