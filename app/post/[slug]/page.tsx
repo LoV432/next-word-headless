@@ -3,10 +3,24 @@ import getPost from '@/lib/wordpress/getPost';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PostComment } from '@/components/PostComment';
+import { Metadata } from 'next/types';
 
 type CommentsType = NonNullable<
 	NonNullable<GetPostQuery['post']>['comments']
 >['nodes'];
+
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ slug: string }>;
+}) {
+	const { slug } = await params;
+	return {
+		title: `Headless CMS - ${slug}`,
+		description:
+			'A demo of a headless CMS using WordPress as a backend and Next.js as a frontend'
+	} as Metadata;
+}
 
 export default async function Post({
 	params

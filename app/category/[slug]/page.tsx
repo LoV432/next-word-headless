@@ -4,6 +4,20 @@ import handlePaginationParams from '@/lib/handlePaginationParams';
 import { CalendarDays } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
 import { Pagination } from '@/components/Pagination';
+import { Metadata } from 'next/types';
+
+export async function generateMetadata({
+	params
+}: {
+	params: Promise<{ slug: string }>;
+}) {
+	const { slug } = await params;
+	return {
+		title: `Headless CMS - ${slug}`,
+		description:
+			'A demo of a headless CMS using WordPress as a backend and Next.js as a frontend'
+	} as Metadata;
+}
 
 export default async function Home({
 	searchParams,
