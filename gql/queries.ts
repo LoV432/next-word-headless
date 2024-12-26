@@ -22,6 +22,12 @@ export const GET_ALL_POSTS = gql`
 						}
 					}
 					date
+					categories {
+						nodes {
+							slug
+							name
+						}
+					}
 				}
 			}
 			pageInfo {

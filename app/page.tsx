@@ -40,8 +40,8 @@ export default async function Home({
 
 function PostCard({ post }: { post: Post }) {
 	return (
-		<div className="relative flex w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:gap-2">
-			<div className="h-[205px]">
+		<div className="relative flex w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:grid-rows-[230px] sm:gap-2">
+			<div className="h-[230px]">
 				<Image
 					src={
 						post.featuredImage?.node.mediaItemUrl ||
@@ -64,6 +64,17 @@ function PostCard({ post }: { post: Post }) {
 						{post.title}
 					</Link>
 				</h2>
+				<div className="flex gap-2">
+					{post.categories?.nodes?.map((category) => (
+						<Link
+							href="#"
+							key={category.slug}
+							className="z-10 mb-2 text-sm text-gray-500 hover:text-gray-600 hover:underline"
+						>
+							{category.name}
+						</Link>
+					))}
+				</div>
 				{post.excerpt && (
 					<div
 						className="mb-4 text-gray-600"
