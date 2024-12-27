@@ -4,21 +4,26 @@ import { FormEvent, useState } from 'react';
 import postComment from '@/lib/wordpress/postComment';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 export function PostComment({ id }: { id: number }) {
 	const [comment, setComment] = useState('');
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const [isPosted, setIsPosted] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
+	const [unapprovedComments, setUnapprovedComments] = useState<
+		{
+			author: string;
+			content: string;
+		}[]
+	>([]);
 
 	function reset() {
 		setComment('');
 		setName('');
 		setEmail('');
 		setError(null);
-		setIsPosted(false);
 	}
 
 	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -38,7 +43,10 @@ export function PostComment({ id }: { id: number }) {
 			});
 			if (response.success) {
 				reset();
-				setIsPosted(true);
+				setUnapprovedComments((comments) => [
+					{ author: name, content: comment },
+					...comments
+				]);
 			} else {
 				setError(new Error('Something went wrong'));
 			}
@@ -105,11 +113,6 @@ export function PostComment({ id }: { id: number }) {
 					<div className="mt-auto flex w-full gap-2">
 						<div className="justify-self-start">
 							{error && <div className="text-red-500">{error.message}</div>}
-							{isPosted && (
-								<div className="text-green-500">
-									Comment received. Moderator will review it shortly.
-								</div>
-							)}
 						</div>
 						<Button
 							type="submit"
@@ -128,6 +131,43 @@ export function PostComment({ id }: { id: number }) {
 					</div>
 				</div>
 			</form>
+			<FakeComments comments={unapprovedComments} />
+		</div>
+	);
+}
+
+function FakeComments({
+	comments
+}: {
+	comments: { author: string; content: string }[];
+}) {
+	return (
+		<div className="mt-auto flex flex-col gap-5 text-gray-500">
+			{comments.map((comment) => (
+				<div
+					key={comment.content}
+					className="flex flex-col gap-2 rounded border border-gray-200 p-5 opacity-70"
+				>
+					<div className="flex items-center gap-2">
+						<Avatar>
+							<AvatarImage
+								src={`https://api.dicebear.com/6.x/bottts/svg?seed=${comment.author}`}
+							/>
+							<AvatarFallback>CN</AvatarFallback>
+						</Avatar>
+						<div className="mb-2 text-gray-600">
+							By {comment.author} on {new Date().toLocaleDateString()}
+						</div>
+					</div>
+					<div className="italic text-gray-500">
+						This comment is pending approval and will be visible to others once
+						approved.
+					</div>
+					<div>
+						<div className="prose prose-base max-w-full">{comment.content}</div>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 }
