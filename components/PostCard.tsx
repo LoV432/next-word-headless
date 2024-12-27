@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { GetAllPostsQuery } from '@/gql/graphql';
-import Link from 'next/link';
+import { PrefetchOnHoverLink } from '@/components/PrefetchOnHoverLink';
 
 type Post = NonNullable<GetAllPostsQuery['posts']>['edges'][0]['node'];
 
@@ -23,22 +23,22 @@ export function PostCard({ post }: { post: Post }) {
 			</div>
 			<div className="flex w-fit flex-col p-4">
 				<h2 className="mb-2 text-xl font-semibold">
-					<Link
+					<PrefetchOnHoverLink
 						href={`/post/${post.slug}`}
 						className="text-blue-600 before:absolute before:left-0 before:top-0 before:h-full before:w-full hover:text-blue-800"
 					>
 						{post.title}
-					</Link>
+					</PrefetchOnHoverLink>
 				</h2>
 				<div className="flex gap-2">
 					{post.categories?.nodes?.map((category) => (
-						<Link
+						<PrefetchOnHoverLink
 							href={`/category/${category.name}`}
 							key={category.slug}
 							className="z-10 mb-2 text-sm text-gray-500 hover:text-gray-600 hover:underline"
 						>
 							{category.name}
-						</Link>
+						</PrefetchOnHoverLink>
 					))}
 				</div>
 				{post.excerpt && (

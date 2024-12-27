@@ -51,6 +51,7 @@ export function PostComment({ id }: { id: number }) {
 				setError(new Error('Something went wrong'));
 			}
 		} catch (error) {
+			console.error(error);
 			setError(new Error('Something went wrong'));
 		} finally {
 			setIsLoading(false);

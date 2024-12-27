@@ -14,7 +14,7 @@ export function Pagination({ pageInfo }: { pageInfo: PageInfo }) {
 					pageInfo.hasPreviousPage ? '' : 'pointer-events-none opacity-0'
 				}
 			>
-				<Link href={`?before=${pageInfo.startCursor}`}>
+				<Link href={`?before=${pageInfo.startCursor}`} prefetch>
 					<ArrowLeftIcon className="h-5 w-5" />
 					Previous
 				</Link>
@@ -23,7 +23,7 @@ export function Pagination({ pageInfo }: { pageInfo: PageInfo }) {
 				asChild
 				className={pageInfo.hasNextPage ? '' : 'pointer-events-none opacity-0'}
 			>
-				<Link href={`?after=${pageInfo.endCursor}`}>
+				<Link href={`?after=${pageInfo.endCursor}`} prefetch>
 					Next
 					<ArrowRightIcon className="h-5 w-5" />
 				</Link>

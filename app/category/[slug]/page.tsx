@@ -1,10 +1,10 @@
 import { getAllPostsFromCategory } from '@/lib/wordpress/getAllPostsByCategory';
-import Link from 'next/link';
 import handlePaginationParams from '@/lib/handlePaginationParams';
 import { CalendarDays } from 'lucide-react';
 import { PostCard } from '@/components/PostCard';
 import { Pagination } from '@/components/Pagination';
 import { Metadata } from 'next/types';
+import { PrefetchOnHoverLink } from '@/components/PrefetchOnHoverLink';
 
 export async function generateMetadata({
 	params
@@ -40,10 +40,10 @@ export default async function Home({
 	return (
 		<main className="container mx-auto max-w-[300] px-4 py-8 sm:max-w-[800px]">
 			<h1 className="mb-8 text-4xl">
-				<Link href={`/category/${queryParams.slug}`}>
+				<PrefetchOnHoverLink href={`/category/${queryParams.slug}`}>
 					All Posts in {queryParams.slug}{' '}
 					<CalendarDays className="inline-block h-5 w-5" />
-				</Link>
+				</PrefetchOnHoverLink>
 			</h1>
 			<div className="grid grid-cols-1 place-items-center gap-6 sm:auto-rows-[230px]">
 				{posts.posts?.edges?.map(({ node }) => (
