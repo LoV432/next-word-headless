@@ -90,7 +90,7 @@ function Comments({ comments }: { comments: CommentsType }) {
 							/>
 							<AvatarFallback>CN</AvatarFallback>
 						</Avatar>
-						<div className="mb-2 text-gray-600">
+						<div className="text-gray-600">
 							By {comment.author?.name} on{' '}
 							{new Date(comment.date || '').toLocaleDateString()}
 						</div>

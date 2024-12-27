@@ -161,7 +161,7 @@ function FakeComments({
 							/>
 							<AvatarFallback>CN</AvatarFallback>
 						</Avatar>
-						<div className="mb-2 text-gray-600">
+						<div className="text-gray-600">
 							By {comment.author} on {new Date().toLocaleDateString()}
 						</div>
 					</div>
