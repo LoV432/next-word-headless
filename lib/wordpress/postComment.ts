@@ -1,4 +1,3 @@
-'use server';
 import { PostCommentMutationVariables } from '@/gql/graphql';
 import { gqlClient } from '@/lib/GraphQLClient';
 

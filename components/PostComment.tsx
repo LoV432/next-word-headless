@@ -102,28 +102,30 @@ export function PostComment({ id }: { id: number }) {
 							placeholder="Your raw and beautiful comment"
 						/>
 					</div>
-					<div className="mt-auto flex justify-end gap-2">
+					<div className="mt-auto flex w-full gap-2">
+						<div className="justify-self-start">
+							{error && <div className="text-red-500">{error.message}</div>}
+							{isPosted && (
+								<div className="text-green-500">
+									Comment received. Moderator will review it shortly.
+								</div>
+							)}
+						</div>
 						<Button
 							type="submit"
 							disabled={isLoading}
-							className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+							className="ml-auto rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 						>
 							{isLoading ? 'Loading...' : 'Post'}
 						</Button>
 						<Button
 							type="button"
 							onClick={reset}
-							className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+							className="justify-end rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
 						>
 							Reset
 						</Button>
 					</div>
-					{error && <div className="text-red-500">{error.message}</div>}
-					{isPosted && (
-						<div className="text-green-500">
-							Comment received. Moderator will review it shortly.
-						</div>
-					)}
 				</div>
 			</form>
 		</div>
