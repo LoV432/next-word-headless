@@ -26,8 +26,8 @@ export function PostComment({ id }: { id: number }) {
 		setError(null);
 	}
 
-	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
+	async function handleSubmit(e?: FormEvent<HTMLFormElement>) {
+		e?.preventDefault();
 		if (!name || !email || !comment) {
 			return;
 		}
@@ -101,6 +101,12 @@ export function PostComment({ id }: { id: number }) {
 							Comment
 						</label>
 						<Textarea
+							onKeyDown={(e) => {
+								if (e.key === 'Enter' && !e.shiftKey) {
+									e.preventDefault();
+									handleSubmit();
+								}
+							}}
 							minLength={3}
 							required
 							id="comment"
