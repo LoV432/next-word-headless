@@ -9590,7 +9590,7 @@ export type GetMenuQuery = { __typename?: 'RootQuery', menu?: { __typename?: 'Me
 export type GetHomepageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomepageQuery = { __typename?: 'RootQuery', pageBy?: { __typename?: 'Page', title?: string | null, content?: string | null } | null };
+export type GetHomepageQuery = { __typename?: 'RootQuery', pageBy?: { __typename?: 'Page', title?: string | null, content?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', caption?: string | null, mediaItemUrl?: string | null } } | null } | null };
 
 
 export const GetAllPostsDocument = `
@@ -9735,6 +9735,12 @@ export const GetHomepageDocument = `
   pageBy(uri: "/") {
     title
     content
+    featuredImage {
+      node {
+        caption
+        mediaItemUrl
+      }
+    }
   }
 }
     `;

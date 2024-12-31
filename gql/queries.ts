@@ -164,6 +164,12 @@ export const GET_HOMEPAGE = gql`
 		pageBy(uri: "/") {
 			title
 			content
+			featuredImage {
+				node {
+					caption
+					mediaItemUrl
+				}
+			}
 		}
 	}
 `;
