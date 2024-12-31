@@ -2,7 +2,7 @@ export default function handlePaginationParams(
 	params: {
 		[key: string]: string | undefined;
 	},
-	limit = 10
+	limit = 9
 ) {
 	const after = params.after;
 	const before = params.before;

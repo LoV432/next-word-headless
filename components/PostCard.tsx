@@ -6,7 +6,7 @@ type Post = NonNullable<GetAllPostsQuery['posts']>['edges'][0]['node'];
 
 export function PostCard({ post }: { post: Post }) {
 	return (
-		<div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px] sm:grid sm:grid-cols-[245px_1fr] sm:gap-2">
+		<div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg shadow-md duration-200 hover:translate-y-[-4px]">
 			<div className="h-[230px]">
 				<Image
 					src={
@@ -18,10 +18,10 @@ export function PostCard({ post }: { post: Post }) {
 					}
 					width={300}
 					height={300}
-					className="h-full w-full object-cover"
+					className="h-[230px] w-full object-cover"
 				/>
 			</div>
-			<div className="flex w-fit flex-col p-4">
+			<div className="flex h-full w-fit flex-col p-4">
 				<h2 className="mb-2 text-xl font-semibold">
 					<PrefetchOnHoverLink
 						href={`/post/${post.slug}`}
