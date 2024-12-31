@@ -158,3 +158,12 @@ export const GET_MENU = gql`
 		}
 	}
 `;
+
+export const GET_HOMEPAGE = gql`
+	query GetHomepage {
+		pageBy(uri: "/") {
+			title
+			content
+		}
+	}
+`;

@@ -9587,6 +9587,11 @@ export type GetMenuQueryVariables = Exact<{
 
 export type GetMenuQuery = { __typename?: 'RootQuery', menu?: { __typename?: 'Menu', menuItems?: { __typename?: 'MenuToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', uri?: string | null, label?: string | null }> } | null } | null };
 
+export type GetHomepageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHomepageQuery = { __typename?: 'RootQuery', pageBy?: { __typename?: 'Page', title?: string | null, content?: string | null } | null };
+
 
 export const GetAllPostsDocument = `
     query GetAllPosts($first: Int, $after: String, $before: String, $last: Int) {
@@ -9725,6 +9730,14 @@ export const GetMenuDocument = `
   }
 }
     `;
+export const GetHomepageDocument = `
+    query GetHomepage {
+  pageBy(uri: "/") {
+    title
+    content
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -9747,6 +9760,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetMenu(variables: GetMenuQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMenuQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMenuQuery>(GetMenuDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetMenu', 'query', variables);
+    },
+    GetHomepage(variables?: GetHomepageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHomepageQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetHomepageQuery>(GetHomepageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHomepage', 'query', variables);
     }
   };
 }
