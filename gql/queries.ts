@@ -145,3 +145,16 @@ export const POST_COMMENT = gql`
 		}
 	}
 `;
+
+export const GET_MENU = gql`
+	query GetMenu($id: ID!) {
+		menu(id: $id) {
+			menuItems {
+				nodes {
+					uri
+					label
+				}
+			}
+		}
+	}
+`;

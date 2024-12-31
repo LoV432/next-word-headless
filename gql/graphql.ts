@@ -3192,8 +3192,8 @@ export type MenuItemToMenuItemLinkableConnectionEdge = Edge & MenuItemLinkableCo
 
 /** Registered menu locations */
 export enum MenuLocationEnum {
-  /** Empty menu location */
-  Empty = 'EMPTY'
+  /** Put the menu in the primary location */
+  Primary = 'PRIMARY'
 }
 
 /** The Type of Identifier used to fetch a single node. Default is "ID". To be used along with the "id" field. */
@@ -8063,13 +8063,6 @@ export type TaxonomyToTermNodeConnectionPageInfo = PageInfo & TermNodeConnection
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
-/** The template assigned to the node */
-export type Template_PageNoTitle = ContentTemplate & {
-  __typename?: 'Template_PageNoTitle';
-  /** The name of the template */
-  templateName?: Maybe<Scalars['String']['output']>;
-};
-
 /** Terms are nodes within a Taxonomy, used to group and relate other nodes. */
 export type TermNode = {
   /** The number of objects connected to the object */
@@ -9587,6 +9580,13 @@ export type PostCommentMutationVariables = Exact<{
 
 export type PostCommentMutation = { __typename?: 'RootMutation', createComment?: { __typename?: 'CreateCommentPayload', success?: boolean | null } | null };
 
+export type GetMenuQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetMenuQuery = { __typename?: 'RootQuery', menu?: { __typename?: 'Menu', menuItems?: { __typename?: 'MenuToMenuItemConnection', nodes: Array<{ __typename?: 'MenuItem', uri?: string | null, label?: string | null }> } | null } | null };
+
 
 export const GetAllPostsDocument = `
     query GetAllPosts($first: Int, $after: String, $before: String, $last: Int) {
@@ -9713,6 +9713,18 @@ export const PostCommentDocument = `
   }
 }
     `;
+export const GetMenuDocument = `
+    query GetMenu($id: ID!) {
+  menu(id: $id) {
+    menuItems {
+      nodes {
+        uri
+        label
+      }
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -9732,6 +9744,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     PostComment(variables?: PostCommentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<PostCommentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<PostCommentMutation>(PostCommentDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'PostComment', 'mutation', variables);
+    },
+    GetMenu(variables: GetMenuQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMenuQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMenuQuery>(GetMenuDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetMenu', 'query', variables);
     }
   };
 }
