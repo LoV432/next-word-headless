@@ -38,14 +38,14 @@ export default async function Home({
 	}
 	const posts = response.data;
 	return (
-		<main className="container mx-auto max-w-[300] px-4 py-8 sm:max-w-[800px]">
+		<main className="container mx-auto max-w-[300] px-4 py-8 sm:max-w-[1200px]">
 			<h1 className="mb-8 text-4xl">
 				<PrefetchOnHoverLink href={`/category/${queryParams.slug}`}>
 					All Posts in {queryParams.slug}{' '}
 					<CalendarDays className="inline-block h-5 w-5" />
 				</PrefetchOnHoverLink>
 			</h1>
-			<div className="grid grid-cols-1 place-items-center gap-6 sm:auto-rows-[230px]">
+			<div className="grid grid-cols-1 place-items-center gap-6 sm:grid-cols-2 md:grid-cols-3">
 				{posts.posts?.edges?.map(({ node }) => (
 					<PostCard key={node.id} post={node} />
 				))}
