@@ -13,7 +13,7 @@ export default async function Home() {
 	return (
 		<main className="container mx-auto grid max-w-[900px] grid-cols-1 place-items-start gap-6 px-4 py-8">
 			<h1 className="text-4xl font-bold">{post.title}</h1>
-			<div className="h-[300px] w-full">
+			<div className="h-[450px] w-full">
 				<Image
 					src={
 						post.featuredImage?.node.mediaItemUrl ||
@@ -22,9 +22,9 @@ export default async function Home() {
 					alt={
 						post.featuredImage?.node.caption || post.title || 'Featured Image'
 					}
-					width={300}
-					height={300}
-					className="h-full w-full rounded-lg object-cover"
+					width={700}
+					height={700}
+					className="h-full w-full rounded-lg object-fill"
 				/>
 			</div>
 			<article
